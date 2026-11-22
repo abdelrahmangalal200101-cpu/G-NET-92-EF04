@@ -11,6 +11,7 @@ namespace EFCore4.Enteties
         public string Email  { get; set; }
         public string PhoneNumber { get; set; }
         public DateTime HireDate { get; set; }
+        public Branch Branch { get; set; } = null!;
 
     }
 }

@@ -12,6 +12,8 @@ namespace EFCore4.Enteties
         public decimal Amount { get; set; }
         public TransactionType TransactionType { get; set; }
         public string Note  { get; set; }
+        public int AccountNumber { get; set; }
+        public Account Account { get; set; } = null!;
 
         
     }

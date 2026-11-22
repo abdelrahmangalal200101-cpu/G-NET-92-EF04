@@ -15,6 +15,8 @@ namespace EFCore4.Enteties
         public DateTime DateOfBirth { get; set; }
         public string Address  { get; set; }
         public CustomerType CustomerType { get; set; }
+        public ICollection<CustomerAccount>? CustomerAccounts { get; set; } = new HashSet<CustomerAccount>();
+
 
 
     }
