@@ -310,5 +310,37 @@ namespace EFCore4
             Console.ReadKey();
 
         }
+
+        public static void ListAllCustomers(NationalBankContext context) 
+        {
+            Console.WriteLine(" --- All Customers --- ");
+            var customers = context.Customers.
+                Include(c => c.CustomerAccounts).
+                ThenInclude(ca => ca.Account).ThenInclude(a => a.Branch).ToList();
+
+            if (!customers.Any()) 
+            {
+                Console.WriteLine("no Customers Found");
+                return;
+            }
+            foreach (var c in customers)
+            {
+                Console.WriteLine($"{c.Id} {c.FullName} ({c.CustomerType})");
+                if (!c.CustomerAccounts.Any())
+                {
+                    Console.WriteLine("no Accounts");
+                }
+                else 
+                {
+                    foreach (var ca in c.CustomerAccounts)
+                    {
+                        string status = ca.AccountStatus ? "Active" : "Closed";
+                        Console.WriteLine($"    {ca.AccountNumber} | {ca.Account!.AccountType} | Balance: {ca.Account.CurrentBalance:N2} | {ca.OwnerShipType} | {status} @ {ca.Account.Branch!.Name}");
+                    }
+                }
+                Console.WriteLine("\nPress any key to return to the menu...");
+                Console.ReadKey();
+            }
+        }
     }
 }
