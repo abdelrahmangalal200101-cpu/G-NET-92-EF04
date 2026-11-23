@@ -1,0 +1,20 @@
+﻿using EFCore4.Enums;
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace EFCore4.Enteties
+{
+    public class CustomerAccount
+    {
+        public DateTime OwnerShipStartDate { get; set; }
+        public OwnerShipType OwnerShipType { get; set; }
+        public bool AccountStatus { get; set; }
+        public int AccountNumber { get; set; }
+        public Account Account { get; set; }
+        public int CustomerId { get; set; }
+        public Customer Customer { get; set; }
+
+
+    }
+}
