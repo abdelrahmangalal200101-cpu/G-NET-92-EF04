@@ -338,9 +338,9 @@ namespace EFCore4
                         Console.WriteLine($"    {ca.AccountNumber} | {ca.Account!.AccountType} | Balance: {ca.Account.CurrentBalance:N2} | {ca.OwnerShipType} | {status} @ {ca.Account.Branch!.Name}");
                     }
                 }
-                Console.WriteLine("\nPress any key to return to the menu...");
-                Console.ReadKey();
             }
+            Console.WriteLine("\nPress any key to return to the menu...");
+            Console.ReadKey();
         }
     }
 }
