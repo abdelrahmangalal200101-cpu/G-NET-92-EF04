@@ -1,8 +1,10 @@
 ﻿using EFCore4.Context;
 using EFCore4.Enteties;
 using EFCore4.Enums;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Text;
 
 namespace EFCore4
@@ -179,6 +181,73 @@ namespace EFCore4
 
         }
 
+        public static void UpdateAccountStatus(NationalBankContext context)
+        {
+            Console.WriteLine("--- Update Account Status ---");
+            int AccountNum = MethodHelpers.ReadInt("Enter Account Number :-");
+            if (!context.Accounts.Any(a => a.AccountNumber == AccountNum))
+            {
+                Console.WriteLine("There is no Account With This Number");
+                return;
+            }
+            int National = MethodHelpers.ReadInt("Enter Your NationalId :- ");
+            var customer = context.Customers.FirstOrDefault(c => c.NationalId == National);
 
+            if (customer == null)
+            {
+                Console.WriteLine("There is no Custoemr with This NationalId");
+                return;
+            }
+
+            var customerAccount = context.CustomerAccounts.
+                FirstOrDefault(ca => ca.AccountNumber == AccountNum && ca.CustomerId == customer.Id);
+            if (customerAccount == null) 
+            {
+                Console.WriteLine("There is no Account Bellong to this user");
+                return;
+            }
+
+            Console.WriteLine("New Status , 1 ) Opened , 2 ) Closed");
+            int choice = MethodHelpers.ReadInt("Enter Your New Account Status");
+            if (choice == 1)
+            {
+                if (customerAccount.AccountStatus == true)
+                {
+                    Console.WriteLine("This Account is already Active sir");
+                }
+                else
+                {
+                    customerAccount.AccountStatus = true;
+                    context.SaveChanges();
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine("Updated Successfully Your Account Now Is Opened");
+                    Console.ResetColor();
+                }
+            }
+            else if (choice == 2)
+            {
+                if (customerAccount.AccountStatus == false)
+                {
+                    Console.WriteLine("This Account is already Closed sir");
+                }
+                else
+                {
+                    customerAccount.AccountStatus = false;
+                    context.SaveChanges();
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine("Updated Successfully Your Account Now Is Closed");
+                    Console.ResetColor();
+                }
+            }
+            else 
+            {
+                Console.WriteLine("Invaild Number ");
+                return;
+            }
+            Console.WriteLine("\nPress any key to return to the menu...");
+            Console.ReadKey();
+
+
+        }
     }
 }
