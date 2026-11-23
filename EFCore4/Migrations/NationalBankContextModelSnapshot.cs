@@ -49,6 +49,32 @@ namespace EFCore4.Migrations
                     b.HasIndex("BranchId");
 
                     b.ToTable("Accounts");
+
+                    b.HasData(
+                        new
+                        {
+                            AccountNumber = 1001,
+                            AccountType = "Savings",
+                            BranchId = 1,
+                            CurrentBalance = 50000.00m,
+                            OpeningDate = new DateTime(2024, 1, 10, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            AccountNumber = 1002,
+                            AccountType = "Checking",
+                            BranchId = 1,
+                            CurrentBalance = 120000.00m,
+                            OpeningDate = new DateTime(2024, 3, 15, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            AccountNumber = 1003,
+                            AccountType = "Savings",
+                            BranchId = 2,
+                            CurrentBalance = 25000.00m,
+                            OpeningDate = new DateTime(2025, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        });
                 });
 
             modelBuilder.Entity("EFCore4.Enteties.Branch", b =>
@@ -83,6 +109,24 @@ namespace EFCore4.Migrations
                         .IsUnique();
 
                     b.ToTable("Branches");
+
+                    b.HasData(
+                        new
+                        {
+                            Code = 1,
+                            Address = "15 Tahrir Square, Cairo",
+                            ManagerId = 1,
+                            Name = "Cairo Main Branch",
+                            PhoneNumber = "0225551111"
+                        },
+                        new
+                        {
+                            Code = 2,
+                            Address = "40 Corniche Rd, Alexandria",
+                            ManagerId = 2,
+                            Name = "Alexandria Branch",
+                            PhoneNumber = "0348882222"
+                        });
                 });
 
             modelBuilder.Entity("EFCore4.Enteties.Customer", b =>
@@ -133,6 +177,41 @@ namespace EFCore4.Migrations
                         .IsUnique();
 
                     b.ToTable("Customers");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Address = "Nasr City, Cairo",
+                            CustomerType = "Individual",
+                            DateOfBirth = new DateTime(1995, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "omar.khaled@gmail.com",
+                            FullName = "Omar Khaled",
+                            NationalId = 295001234,
+                            PhoneNumber = "01112223344"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Address = "Smouha, Alexandria",
+                            CustomerType = "Individual",
+                            DateOfBirth = new DateTime(1998, 5, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "sara.ali@gmail.com",
+                            FullName = "Sara Ali",
+                            NationalId = 298051678,
+                            PhoneNumber = "01223334455"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Address = "Maadi, Cairo",
+                            CustomerType = "Business",
+                            DateOfBirth = new DateTime(2015, 3, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "info@techsolutions.com",
+                            FullName = "Tech Solutions Co.",
+                            NationalId = 300112209,
+                            PhoneNumber = "01098887766"
+                        });
                 });
 
             modelBuilder.Entity("EFCore4.Enteties.CustomerAccount", b =>
@@ -158,6 +237,40 @@ namespace EFCore4.Migrations
                     b.HasIndex("AccountNumber");
 
                     b.ToTable("CustomerAccounts");
+
+                    b.HasData(
+                        new
+                        {
+                            CustomerId = 1,
+                            AccountNumber = 1001,
+                            AccountStatus = true,
+                            OwnerShipStartDate = new DateTime(2024, 1, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            OwnerShipType = "Primary"
+                        },
+                        new
+                        {
+                            CustomerId = 3,
+                            AccountNumber = 1002,
+                            AccountStatus = true,
+                            OwnerShipStartDate = new DateTime(2024, 3, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            OwnerShipType = "Primary"
+                        },
+                        new
+                        {
+                            CustomerId = 1,
+                            AccountNumber = 1002,
+                            AccountStatus = true,
+                            OwnerShipStartDate = new DateTime(2024, 6, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            OwnerShipType = "CoHolder"
+                        },
+                        new
+                        {
+                            CustomerId = 2,
+                            AccountNumber = 1003,
+                            AccountStatus = true,
+                            OwnerShipStartDate = new DateTime(2025, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            OwnerShipType = "Primary"
+                        });
                 });
 
             modelBuilder.Entity("EFCore4.Enteties.Manager", b =>
@@ -192,6 +305,24 @@ namespace EFCore4.Migrations
                         .IsUnique();
 
                     b.ToTable("Managers");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Email = "ahmed.hassan@nationalbank.com",
+                            FullName = "Ahmed Hassan",
+                            HireDate = new DateTime(2020, 1, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            PhoneNumber = "01001112233"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Email = "mona.mahmoud@nationalbank.com",
+                            FullName = "Mona Mahmoud",
+                            HireDate = new DateTime(2021, 5, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            PhoneNumber = "01004445566"
+                        });
                 });
 
             modelBuilder.Entity("EFCore4.Enteties.Transaction", b =>
@@ -226,6 +357,44 @@ namespace EFCore4.Migrations
                     b.HasIndex("AccountNumber");
 
                     b.ToTable("Transactions");
+
+                    b.HasData(
+                        new
+                        {
+                            TransactionNumber = 1,
+                            AccountNumber = 1001,
+                            Amount = 50000.00m,
+                            Note = "Initial Deposit",
+                            TransactionDate = new DateTime(2024, 1, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TransactionType = "Diposite"
+                        },
+                        new
+                        {
+                            TransactionNumber = 2,
+                            AccountNumber = 1002,
+                            Amount = 150000.00m,
+                            Note = "Company Capital",
+                            TransactionDate = new DateTime(2024, 3, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TransactionType = "Diposite"
+                        },
+                        new
+                        {
+                            TransactionNumber = 3,
+                            AccountNumber = 1002,
+                            Amount = 30000.00m,
+                            Note = "Equipment Purchase",
+                            TransactionDate = new DateTime(2024, 4, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TransactionType = "Withdraw"
+                        },
+                        new
+                        {
+                            TransactionNumber = 4,
+                            AccountNumber = 1003,
+                            Amount = 25000.00m,
+                            Note = "Account Opening",
+                            TransactionDate = new DateTime(2025, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TransactionType = "Diposite"
+                        });
                 });
 
             modelBuilder.Entity("EFCore4.Enteties.Account", b =>

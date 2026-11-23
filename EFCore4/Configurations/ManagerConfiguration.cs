@@ -17,6 +17,10 @@ namespace EFCore4.Configurations
             builder.HasIndex(m => m.Email).IsUnique();
             builder.Property(m => m.PhoneNumber).IsRequired().HasMaxLength(20);
             builder.Property(m => m.HireDate).IsRequired();
+            builder.HasData(
+                new Manager { Id = 1, FullName = "Ahmed Hassan", Email = "ahmed.hassan@nationalbank.com", PhoneNumber = "01001112233", HireDate = new DateTime(2020, 1, 15) },
+                new Manager { Id = 2, FullName = "Mona Mahmoud", Email = "mona.mahmoud@nationalbank.com", PhoneNumber = "01004445566", HireDate = new DateTime(2021, 5, 10) }
+                );
         }
     }
 }
