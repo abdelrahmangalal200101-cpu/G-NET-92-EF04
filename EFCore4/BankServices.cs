@@ -249,5 +249,66 @@ namespace EFCore4
 
 
         }
+
+        public static void RemoveAccountFromCustomer(NationalBankContext context)
+        {
+            Console.WriteLine("--- Remove Account From Customer ---");
+
+            int AccountNum = MethodHelpers.ReadInt("Enter Account Number :-");
+            if (!context.Accounts.Any(a => a.AccountNumber == AccountNum))
+            {
+                Console.WriteLine("There is no Account With This Number");
+                return;
+            }
+            int National = MethodHelpers.ReadInt("Enter Your NationalId :- ");
+            var customer = context.Customers.FirstOrDefault(c => c.NationalId == National);
+
+            if (customer == null)
+            {
+                Console.WriteLine("There is no Custoemr with This NationalId");
+                return;
+            }
+
+            var customerAccount = context.CustomerAccounts.
+                FirstOrDefault(ca => ca.AccountNumber == AccountNum && ca.CustomerId == customer.Id);
+            if (customerAccount == null)
+            {
+                Console.WriteLine("There is no Account Bellong to this user");
+                return;
+            }
+
+            context.CustomerAccounts.Remove(customerAccount);
+            context.SaveChanges();
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("OwnerShip Link Deleted");
+            Console.ResetColor();
+
+            bool hasOtherOwner = context.CustomerAccounts.Any(ca => ca.AccountNumber == AccountNum);
+            if (!hasOtherOwner)
+            {
+                var account = context.Accounts.FirstOrDefault(a => a.AccountNumber == AccountNum);
+                if (account != null)
+                {
+                    try
+                    {
+                        context.Accounts.Remove(account);
+                        context.SaveChanges();
+                        Console.ForegroundColor = ConsoleColor.Cyan;
+                        Console.WriteLine($"That was the last owner – account '{AccountNum}' was also removed.");
+                        Console.ResetColor();
+                    }
+                    catch (DbUpdateException)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Yellow;
+                        Console.WriteLine($"That was the last owner, but account '{AccountNum}' could not be deleted because it has existing transactions.");
+                        Console.ResetColor();
+                    }
+                }
+            }
+
+            Console.WriteLine("\nPress any key to return to the menu...");
+            Console.ReadKey();
+
+        }
     }
 }
